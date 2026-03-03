@@ -1,0 +1,95 @@
+### Serralyse API Test Collection
+### Base URL
+@baseUrl = http://localhost:8080
+@userId = 6a1c5e7f-9994-4adf-9201-bcaf8844a2eb
+
+###############################################
+# USER MANAGEMENT
+###############################################
+
+### 1. Register New User
+POST {{baseUrl}}/api/users/register
+Content-Type: application/json
+
+{
+  "email": "john.doe@example.com",
+  "password": "SecurePass123!",
+  "firstName": "John",
+  "lastName": "Doe"
+}
+
+###############################################
+# SKIN ANALYSIS - OILY SKIN
+###############################################
+
+### 2. Create Skin Analysis - Oily Skin
+POST {{baseUrl}}/api/analysis/user/{{userId}}
+Content-Type: application/json
+
+{
+  "skinType": "OILY",
+  "age": 28
+}
+
+###############################################
+# SKIN ANALYSIS - DRY SKIN
+###############################################
+
+### 3. Create Skin Analysis - Dry Skin
+POST {{baseUrl}}/api/analysis/user/{{userId}}
+Content-Type: application/json
+
+{
+  "skinType": "DRY",
+  "age": 35
+}
+
+###############################################
+# SKIN ANALYSIS - SENSITIVE SKIN
+###############################################
+
+### 4. Create Skin Analysis - Sensitive Skin
+POST {{baseUrl}}/api/analysis/user/{{userId}}
+Content-Type: application/json
+
+{
+  "skinType": "SENSITIVE",
+  "age": 42
+}
+
+###############################################
+# ERROR SCENARIOS
+###############################################
+
+### 5. User Not Found (404)
+POST {{baseUrl}}/api/analysis/user/00000000-0000-0000-0000-000000000000
+Content-Type: application/json
+
+{
+  "skinType": "OILY",
+  "age": 28
+}
+
+### 6. Invalid Skin Type (400)
+POST {{baseUrl}}/api/analysis/user/{{userId}}
+Content-Type: application/json
+
+{
+  "skinType": "INVALID_TYPE",
+  "age": 28
+}
+
+### 7. Missing Required Fields (400)
+POST {{baseUrl}}/api/analysis/user/{{userId}}
+Content-Type: application/json
+
+{
+  "age": 28
+}
+
+###############################################
+# HEALTH CHECK
+###############################################
+
+### 8. Health Check (if Spring Actuator enabled)
+GET {{baseUrl}}/actuator/health

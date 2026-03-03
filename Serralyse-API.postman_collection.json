@@ -1,0 +1,158 @@
+{
+  "info": {
+    "_postman_id": "serralyse-api-collection",
+    "name": "Serralyse API - Personalized Skincare Platform",
+    "description": "Complete API collection for Serralyse skincare analysis platform. Includes user management, skin analysis, and prescription generation endpoints.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "User Management",
+      "item": [
+        {
+          "name": "Register New User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"SecurePass123!\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/users/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", "register"]
+            },
+            "description": "Register a new user account. Returns user UUID for subsequent API calls."
+          },
+          "response": [
+            {
+              "name": "Success - User Registered",
+              "status": "Created",
+              "code": 201,
+              "body": "{\n  \"id\": \"6a1c5e7f-9994-4adf-9201-bcaf8844a2eb\",\n  \"email\": \"john.doe@example.com\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"createdAt\": \"2026-03-03T10:30:00\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Skin Analysis",
+      "item": [
+        {
+          "name": "Create Skin Analysis (Oily Skin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"skinType\": \"OILY\",\n  \"age\": 28\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/analysis/user/{{userId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "analysis", "user", "{{userId}}"]
+            },
+            "description": "Create skin analysis for oily skin. Returns prescription with Salicylic Acid."
+          },
+          "response": [
+            {
+              "name": "Success - Oily Skin Prescription",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"id\": 1,\n  \"createdAt\": \"2026-03-03T10:35:00\",\n  \"productionStatus\": \"PENDING\",\n  \"specialInstructions\": null,\n  \"assignedPodLocation\": null,\n  \"items\": [\n    {\n      \"id\": 1,\n      \"rawMaterialName\": \"Salicylic Acid Bio\",\n      \"inciName\": \"Salicylic Acid\",\n      \"ratio\": 2.0\n    },\n    {\n      \"id\": 2,\n      \"rawMaterialName\": \"Titanium Dioxide SPF50\",\n      \"inciName\": \"Titanium Dioxide\",\n      \"ratio\": 1.0\n    }\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Create Skin Analysis (Dry Skin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"skinType\": \"DRY\",\n  \"age\": 35\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/analysis/user/{{userId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "analysis", "user", "{{userId}}"]
+            },
+            "description": "Create skin analysis for dry skin. Returns prescription with Hyaluronic Acid."
+          },
+          "response": [
+            {
+              "name": "Success - Dry Skin Prescription",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"id\": 2,\n  \"createdAt\": \"2026-03-03T10:40:00\",\n  \"productionStatus\": \"PENDING\",\n  \"items\": [\n    {\n      \"id\": 3,\n      \"rawMaterialName\": \"Hyaluronic Acid Ultra\",\n      \"inciName\": \"Sodium Hyaluronate\",\n      \"ratio\": 3.0\n    },\n    {\n      \"id\": 4,\n      \"rawMaterialName\": \"Titanium Dioxide SPF50\",\n      \"inciName\": \"Titanium Dioxide\",\n      \"ratio\": 1.0\n    }\n  ]\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Error Scenarios",
+      "item": [
+        {
+          "name": "User Not Found (404)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"skinType\": \"OILY\",\n  \"age\": 28\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/analysis/user/00000000-0000-0000-0000-000000000000",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "analysis", "user", "00000000-0000-0000-0000-000000000000"]
+            },
+            "description": "Test error handling for non-existent user."
+          },
+          "response": [
+            {
+              "name": "Error - User Not Found",
+              "status": "Not Found",
+              "code": 404,
+              "body": "{\n  \"status\": 404,\n  \"message\": \"User not found with ID: 00000000-0000-0000-0000-000000000000\",\n  \"timestamp\": \"2026-03-03T10:45:00\"\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "userId",
+      "value": "6a1c5e7f-9994-4adf-9201-bcaf8844a2eb",
+      "type": "string",
+      "description": "Replace with actual user ID from registration"
+    }
+  ]
+}
