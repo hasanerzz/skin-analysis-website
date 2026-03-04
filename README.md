@@ -1,6 +1,6 @@
 # 🧪 Serralyse - AI-Powered Personalized Skincare Platform
 
-> Enterprise-grade Spring Boot backend demonstrating production-ready RESTful API design, advanced JPA relationship mapping, and microservice architecture for personalized skincare prescription generation.
+> Backend-focused portfolio project demonstrating Spring Boot RESTful API design, advanced JPA relationship mapping, and considerations for scalable architecture in personalized skincare prescription generation.
 
 [![Java 21](https://img.shields.io/badge/Java-21-orange?style=flat-square&logo=openjdk&logoColor=white)](https://openjdk.org/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0.1-brightgreen?style=flat-square&logo=spring-boot)](https://spring.io/projects/spring-boot)
@@ -10,9 +10,8 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Code%20Quality-A+-success?style=for-the-badge" alt="Code Quality"/>
   <img src="https://img.shields.io/badge/Architecture-Layered-blue?style=for-the-badge" alt="Architecture"/>
-  <img src="https://img.shields.io/badge/Status-Production%20Ready-green?style=for-the-badge" alt="Status"/>
+  <img src="https://img.shields.io/badge/Status-Active%20Development-green?style=for-the-badge" alt="Status"/>
 </p>
 
 ---
@@ -34,20 +33,20 @@
 
 ## 🌟 Overview
 
-**Serralyse** is a production-grade Spring Boot application that revolutionizes personalized skincare through AI-driven analysis and automated prescription generation. The platform combines modern microservice architecture with enterprise-level Spring Boot patterns to deliver scalable, maintainable, and secure skincare recommendations.
+**Serralyse** is a Spring Boot application demonstrating personalized skincare through analysis-driven prescription generation. The platform showcases modern backend development patterns with Spring Boot, designed with scalability and maintainability considerations.
 
 ### 🎯 What Makes This Project Stand Out?
 
-- **🏗️ Enterprise Architecture**: Clean layered architecture with proper separation of concerns
+- **🏗️ Layered Architecture**: Clean separation of concerns across controller, service, and repository layers
 - **🔒 Type Safety**: Comprehensive use of Java 21 features and strong typing
 - **📊 Complex Relationships**: Advanced JPA mappings (OneToMany, ManyToOne, OneToOne with bidirectional refs)
 - **🎨 DTO Pattern**: Prevents over-fetching and circular dependencies
-- **⚡ Performance**: Optimized lazy loading and database indexing strategies
-- **🧪 Production Ready**: Transactional integrity, error handling, and validation
-- **🔧 Industry Standards**: RESTful API design following OpenAPI specifications
+- **⚡ Performance Considerations**: Optimized lazy loading and database indexing strategies
+- **🧪 Production-Conscious Design**: Transactional integrity, error handling, and validation
+- **🔧 RESTful Standards**: API design following REST principles
 
 **Project Status:** Active Development | Portfolio Project  
-**Backend Focus:** Demonstrating advanced Spring Boot, JPA/Hibernate, and PostgreSQL expertise
+**Backend Focus:** Demonstrating Spring Boot, JPA/Hibernate, and PostgreSQL skills
 
 ---
 
@@ -358,9 +357,9 @@ curl -X POST http://localhost:8080/api/analysis/user/{userId} \
 - **DTO Pattern**: Proper separation between domain models and API contracts
 - **Performance Optimization**: Database indexing and pagination for scalability
 - **Error Handling**: Global exception handling with custom error responses
-- **Testing**: Unit and integration tests with high code coverage
+- **Testing**: Unit and integration tests with test coverage
 
-### Spring Boot Ecosystem Mastery
+### Spring Boot Ecosystem Experience
 - Spring MVC for RESTful web services
 - Spring Security with JWT authentication
 - Spring Cache with Caffeine for performance optimization
@@ -368,7 +367,7 @@ curl -X POST http://localhost:8080/api/analysis/user/{userId} \
 - Bean Validation for request validation
 - Hibernate ORM with relationship mapping and indexing
 - Automated data seeding on application startup
-- Production-ready configuration management
+- Configuration management
 - Spring Boot Actuator for monitoring
 
 ## 📡 API Endpoints
@@ -802,12 +801,12 @@ GitHub Actions workflow: [`.github/workflows/ci-cd.yml`](.github/workflows/ci-cd
 This project showcases:
 
 ✅ **Modern Java Development**: Java 21 with latest features  
-✅ **Enterprise Framework**: Spring Boot 4.0.1 production-ready setup  
-✅ **Database Expertise**: PostgreSQL with complex JPA relationships  
+✅ **Spring Boot Framework**: Spring Boot 4.0.1 with production-conscious design  
+✅ **Database Design**: PostgreSQL with complex JPA relationships  
 ✅ **API Design**: RESTful endpoints with proper HTTP semantics  
 ✅ **Code Quality**: Clean code with Lombok and design patterns  
 ✅ **Business Logic**: Real-world domain modeling (healthcare/cosmetics)  
-✅ **Scalability**: UUID-based design for distributed systems  
+✅ **Scalability Considerations**: UUID-based design for future distributed systems  
 
 ## 📄 License
 
@@ -854,34 +853,6 @@ This project is licensed under the terms specified in the [LICENSE](LICENSE) fil
 
 ---
 
-## � Performance Metrics
-
-### Response Time Benchmarks
-
-| Endpoint | Avg Response Time | 95th Percentile | Throughput |
-|----------|-------------------|-----------------|------------|
-| `POST /api/users/register` | 45ms | 78ms | 500 req/sec |
-| `POST /api/analysis/user/{id}` | 120ms | 185ms | 300 req/sec |
-| Database Query (complex join) | 8ms | 15ms | - |
-
-### System Metrics
-
-- **Database Connections**: HikariCP pool (min: 5, max: 20)
-- **Memory Usage**: ~350MB heap (production)
-- **Startup Time**: ~5 seconds (with data seeding)
-- **Docker Image Size**: 320MB (multi-stage build)
-
-### Optimization Techniques
-
-- ✅ JPA entity lazy loading for relationships
-- ✅ Database indexes on foreign keys and search columns
-- ✅ HikariCP connection pooling
-- ✅ DTO pattern to prevent over-fetching
-- ✅ Transaction boundaries optimized
-- ✅ Docker multi-stage build for minimal image size
-
----
-
 ## 🎓 What I Learned Building This
 
 ### Technical Skills Demonstrated
@@ -891,7 +862,7 @@ This project is licensed under the terms specified in the [LICENSE](LICENSE) fil
 <td width="50%">
 
 **Backend Development**
-- Spring Boot 4.0 ecosystem mastery
+- Spring Boot 4.0 ecosystem experience
 - RESTful API design principles
 - JPA/Hibernate relationship mapping
 - Transaction management
@@ -960,32 +931,20 @@ This project is licensed under the terms specified in the [LICENSE](LICENSE) fil
 
 ### Quick Project Summary
 
-**Project Type**: Full-stack backend API (Spring Boot)  
+**Project Type**: Backend API (Spring Boot)  
 **Domain**: Healthcare/Cosmetics (Personalized Skincare)  
-**Complexity**: Medium-High (enterprise patterns, relational DB, microservice-ready)  
+**Complexity**: Medium (layered architecture, relational DB, designed with scalability considerations)  
 **Time Investment**: ~2 weeks of active development  
 **Lines of Code**: ~3,000 (excluding tests and configuration)
 
 ### Key Differentiators
 
 ✨ **Not a Tutorial Clone**: Custom business logic for skincare prescription generation  
-✨ **Production Patterns**: Uses DTO, proper exception handling, and transaction management  
-✨ **DevOps Ready**: Dockerized, CI/CD pipeline, environment configs  
-✨ **Database Expertise**: Complex JPA relationships with 6+ entities  
+✨ **Backend Patterns**: Uses DTO, proper exception handling, and transaction management  
+✨ **DevOps Aware**: Dockerized with docker-compose, environment configs  
+✨ **Database Design**: Complex JPA relationships with 6+ entities  
 ✨ **API Design**: RESTful principles, proper HTTP semantics, error responses  
 ✨ **Documentation**: Comprehensive README, Postman collection, API tests  
-
-### Technologies Proficiency
-
-| Technology | Proficiency | Evidence in Project |
-|-----------|-------------|---------------------|
-| Java 21 | ⭐⭐⭐⭐⭐ | Modern features, records, streams |
-| Spring Boot | ⭐⭐⭐⭐⭐ | Full ecosystem usage |
-| JPA/Hibernate | ⭐⭐⭐⭐ | Complex mappings, optimization |
-| PostgreSQL | ⭐⭐⭐⭐ | Schema design, relationships |
-| Docker | ⭐⭐⭐⭐ | Multi-stage builds, compose |
-| REST API | ⭐⭐⭐⭐⭐ | Proper design, documentation |
-| Git | ⭐⭐⭐⭐ | Commit history, branching |
 
 ### Want to See More?
 
@@ -1004,7 +963,7 @@ Ready to discuss:
 - Scaling strategies for this system
 - Security considerations and JWT implementation
 - CI/CD pipeline design
-- Microservice decomposition approach
+- System architecture and design approach
 
 ---
 
