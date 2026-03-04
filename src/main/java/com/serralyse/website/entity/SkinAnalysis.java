@@ -7,7 +7,10 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "skin_analyses")
+@Table(name = "skin_analyses", indexes = {
+        @Index(name = "idx_skin_analysis_user_id", columnList = "user_id"),
+        @Index(name = "idx_skin_analysis_date", columnList = "analysisDate")
+})
 @Data
 public class SkinAnalysis {
     @Id

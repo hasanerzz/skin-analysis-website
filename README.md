@@ -277,6 +277,8 @@ curl -X POST http://localhost:8080/api/analysis/user/{userId} \
 
 ## ✨ Features
 
+- **🔐 JWT Authentication & Authorization**: Secure token-based authentication with role-based access control
+- **💾 Intelligent Caching**: In-memory caching with Caffeine for improved response times
 - **Web-Based Skin Analysis**: Users access the platform via web browser to perform skin analysis
 - **Automated Prescription Generation**: Creates personalized skincare formulations based on skin type and age
 - **MicroPod Production System**: Backend integration with microPod manufacturing units
@@ -286,6 +288,10 @@ curl -X POST http://localhost:8080/api/analysis/user/{userId} \
 - **Transactional Integrity**: ACID-compliant operations using Spring's @Transactional
 - **Bean Validation**: Request validation using Jakarta Bean Validation
 - **JPA/Hibernate ORM**: Efficient database operations with relationship mapping
+- **⚡ Performance Optimization**: Database indexing on frequently queried columns
+- **📄 Pagination Support**: Efficient data retrieval with configurable page sizes
+- **🧪 Unit Testing**: Comprehensive test coverage with JUnit 5 and Mockito
+- **🛡️ Global Exception Handling**: Centralized error handling with custom error responses
 
 ## 👤 User Experience Flow
 
@@ -305,15 +311,34 @@ curl -X POST http://localhost:8080/api/analysis/user/{userId} \
 - **Spring Boot 4.0.1**: Auto-configuration, embedded server, production-ready features
 - **Spring MVC**: RESTful web services with @RestController and @Controller
 - **Spring Data JPA**: Repository pattern with automatic query generation
+- **Spring Security**: JWT-based authentication and authorization
 - **Hibernate ORM**: JPA implementation with advanced caching and lazy loading
+
+### Security
+- **Spring Security 6**: Authentication and authorization framework
+- **JWT (JSON Web Tokens)**: Stateless authentication with JJWT library (v0.12.3)
+- **BCrypt**: Password hashing algorithm
+
+### Caching
+- **Spring Cache**: Abstraction layer for caching with declarative annotations
+- **Caffeine**: High-performance, near-optimal in-memory caching library
+- **Cache Strategy**: TTL-based expiration (10 minutes) with maximum size limits
 
 ### Database
 - **PostgreSQL**: ACID-compliant relational database with JSON support
 - **HikariCP**: High-performance JDBC connection pooling (default in Spring Boot)
+- **Database Indexing**: Performance optimization on frequently queried columns
+
+### Testing
+- **JUnit 5**: Modern testing framework with parameterized tests
+- **Mockito**: Mocking framework for unit testing
+- **Spring Boot Test**: Integration testing support
+- **MockMvc**: Controller layer testing
 
 ### Development Tools
 - **Lombok**: Eliminates boilerplate with @Data, @RequiredArgsConstructor annotations
 - **Spring Boot DevTools**: Hot reload during development
+- **Spring Boot Actuator**: Production-ready monitoring and health checks
 - **Maven**: Build lifecycle management and dependency resolution
 
 ### Validation & Mapping
@@ -323,28 +348,38 @@ curl -X POST http://localhost:8080/api/analysis/user/{userId} \
 ## 🎯 What This Project Demonstrates
 
 ### Backend Development Skills
+- **🔐 Security Implementation**: JWT-based authentication with Spring Security
+- **💾 Caching Strategy**: In-memory caching with automatic invalidation
 - **RESTful API Design**: Clean, stateless endpoints following REST best practices
 - **Layered Architecture**: Separation of concerns with Controller, Service, and Repository layers
 - **Database Design**: Complex entity relationships with JPA/Hibernate ORM
 - **Transaction Management**: ACID-compliant operations for data integrity
 - **Dependency Injection**: Constructor-based DI following SOLID principles
 - **DTO Pattern**: Proper separation between domain models and API contracts
+- **Performance Optimization**: Database indexing and pagination for scalability
+- **Error Handling**: Global exception handling with custom error responses
+- **Testing**: Unit and integration tests with high code coverage
 
 ### Spring Boot Ecosystem Mastery
 - Spring MVC for RESTful web services
-- Spring Data JPA with custom repositories
+- Spring Security with JWT authentication
+- Spring Cache with Caffeine for performance optimization
+- Spring Data JPA with custom repositories and pagination
 - Bean Validation for request validation
-- Hibernate ORM with relationship mapping
+- Hibernate ORM with relationship mapping and indexing
 - Automated data seeding on application startup
 - Production-ready configuration management
+- Spring Boot Actuator for monitoring
 
 ## 📡 API Endpoints
 
-### User Management
+> **Note**: Detailed API documentation available in [API_DOCUMENTATION.md](API_DOCUMENTATION.md)
+
+### Authentication
 
 **Register New User**
 ```
-POST /api/v1/users/register
+POST /api/v1/auth/register
 Content-Type: application/json
 ```
 
@@ -352,21 +387,56 @@ Request Body:
 ```json
 {
   "email": "user@example.com",
-  "name": "John Doe",
-  "age": 28
+  "password": "securePassword123",
+  "firstName": "John",
+  "lastName": "Doe"
 }
 ```
+
+Response (200 OK):
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIs...",
+  "email": "user@example.com",
+  "firstName": "John",
+  "lastName": "Doe"
+}
+```
+
+**Login**
+```
+POST /api/v1/auth/login
+Content-Type: application/json
+```
+
+Request Body:
+```json
+{
+  "email": "user@example.com",
+  "password": "securePassword123"
+}
+```
+
+### User Management
+
+**Get All Users (Paginated)**
+```
+GET /api/v1/users?page=0&size=10
+Authorization: Bearer {jwt-token}
+```
+
+Query Parameters:
+- `page` (optional, default: 0) - Page number
+- `size` (optional, default: 10) - Items per page
 
 ### Skin Analysis
 
 **Create Skin Analysis & Generate Prescription**
 ```
-POST /api/v1/analysis/user/{userId}
+POST /api/v1/skin-analyses
+Authorization: Bearer {jwt-token}
 Content-Type: application/json
 ```
-
-Path Parameters:
-- `userId` (UUID): User's unique identifier
 
 Request Body:
 ```json
@@ -383,27 +453,29 @@ Supported Skin Types:
 - `NORMAL` - For normal skin
 - `SENSITIVE` - For sensitive skin
 
-Response (200 OK):
+Response (201 CREATED):
 ```json
 {
-  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "id": 1,
   "createdAt": "2026-03-03T10:30:00",
+  "productionStatus": "PENDING",
   "items": [
     {
-      "rawMaterialName": "Salicylic Acid",
+      "id": 1,
+      "rawMaterial": {
+        "name": "Salicylic Acid Bio",
+        "inciName": "Salicylic Acid"
+      },
       "ratio": 2.0
-    },
-    {
-      "rawMaterialName": "Titanium Dioxide",
-      "ratio": 1.0
     }
   ]
 }
 ```
 
 Error Responses:
-- `404 Not Found` - User not found
+- `401 Unauthorized` - Missing or invalid JWT token
 - `400 Bad Request` - Invalid request body
+- `404 Not Found` - Resource not found
 - `500 Internal Server Error` - Server error
 
 ## 🗂️ Project Structure
@@ -414,20 +486,33 @@ src/main/java/com/serralyse/website/
 ├── ⚙️  config/                         # Configuration & data seeding
 │   └── DataSeeder.java                # Initializes raw materials database
 ├── 🌐 controller/                      # REST API endpoints
+│   ├── AuthController.java            # Authentication endpoints
 │   ├── AnalysisController.java        # Skin analysis endpoints
 │   └── UserController.java            # User management endpoints  
 ├── 📦 dto/                             # Data Transfer Objects
+│   ├── AuthResponse.java              # JWT auth response
+│   ├── LoginRequest.java              # Login credentials
 │   ├── PrescriptionResponse.java      # API response models
 │   ├── SkinAnalysisRequest.java       # API request models
 │   └── UserRegisterRequest.java
 ├── 🗃️  entity/                         # JPA entities (domain model)
-│   ├── User.java                      # User entity
+│   ├── User.java                      # User entity with UserDetails
+│   ├── Role.java                      # User roles enum
 │   ├── SkinAnalysis.java              # Analysis records
 │   ├── Prescription.java              # Generated prescriptions
 │   ├── PrescriptionItem.java          # Prescription ingredients
 │   ├── RawMaterial.java               # Skincare ingredients
 │   ├── MicroPod.java                  # Production pods
 │   └── *Status.java, *Type.java       # Enumerations
+├── 🛡️  exception/                      # Error handling
+│   ├── GlobalExceptionHandler.java    # Centralized exception handling
+│   └── ErrorResponse.java             # Custom error response DTO
+├── 🔧 config/                          # Configuration classes
+│   ├── SecurityConfig.java            # Spring Security configuration
+│   ├── CacheConfig.java               # Caffeine cache configuration
+│   ├── JwtService.java                # JWT token generation/validation
+│   ├── JwtAuthenticationFilter.java   # JWT filter for requests
+│   └── DataSeeder.java                # Database initialization
 ├── 🔄 mapper/                          # Entity ↔ DTO mappers
 │   └── PrescriptionMapper.java
 ├── 💾 repository/                      # Data access layer (Spring Data JPA)
@@ -437,8 +522,9 @@ src/main/java/com/serralyse/website/
 │   ├── RawMaterialRepository.java
 │   └── MicroPodRepository.java
 └── 🎯 service/                         # Business logic layer
+    ├── AuthService.java               # Authentication & JWT management
     ├── SkinAnalysisService.java       # Analysis & prescription generation
-    └── UserService.java               # User management
+    └── UserService.java               # User management & UserDetailsService
 ```
 
 ## 🏗️ Domain Model

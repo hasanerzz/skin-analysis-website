@@ -8,7 +8,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "prescriptions")
+@Table(name = "prescriptions", indexes = {
+        @Index(name = "idx_prescription_analysis_id", columnList = "analysis_id"),
+        @Index(name = "idx_prescription_created_at", columnList = "createdAt"),
+        @Index(name = "idx_prescription_status", columnList = "productionStatus")
+})
 @Data
 public class Prescription {
     @Id
