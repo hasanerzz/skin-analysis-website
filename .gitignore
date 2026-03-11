@@ -1,10 +1,21 @@
-HELP.md
+# .gitignore dosyasının kendisi
+.gitignore
+
+# Build artifacts
 target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
 
-### STS ###
+# IDE files
+.idea
+.vscode/
+*.iws
+*.iml
+*.ipr
 .apt_generated
 .classpath
 .factorypath
@@ -13,21 +24,20 @@ target/
 .springBeans
 .sts4-cache
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-
-### NetBeans ###
+# NetBeans
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
 
-### VS Code ###
-.vscode/
+# Documentation and test files
+*.md
+!README.md
+*.http
+*.postman_collection.json
+API_DOCUMENTATION.md
+CHANGELOG.md
+CONTRIBUTING.md
+HELP.md
+api-tests.http

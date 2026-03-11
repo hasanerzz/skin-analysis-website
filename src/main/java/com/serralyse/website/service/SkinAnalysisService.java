@@ -5,6 +5,7 @@ import com.serralyse.website.entity.*;
 import com.serralyse.website.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -17,7 +18,6 @@ public class SkinAnalysisService {
     private final SkinAnalysisRepository skinAnalysisRepository;
     private final PrescriptionRepository prescriptionRepository;
     private final RawMaterialRepository rawMaterialRepository;
-    private final MicroPodRepository microPodRepository;
     private final UserRepository userRepository;
 
     @Transactional
@@ -45,8 +45,10 @@ public class SkinAnalysisService {
 
         return prescriptionRepository.save(prescription);
     }
-    private void addProductToPrescription(Prescription prescription, String prodcutName, Double ratio){
-        rawMaterialRepository.findByNameContainingIgnoreCase(prodcutName).ifPresent(product -> {
+
+    @Cacheable(value = "rawMaterials", key = "#productName")
+    private void addProductToPrescription(Prescription prescription, String productName, Double ratio){
+        rawMaterialRepository.findByNameContainingIgnoreCase(productName).ifPresent(product -> {
             PrescriptionItem item = new PrescriptionItem();
             item.setPrescription(prescription);
             item.setRawMaterial(product);

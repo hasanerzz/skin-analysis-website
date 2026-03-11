@@ -28,7 +28,7 @@
 - [Design Patterns](#-architecture--design-patterns)
 - [Development](#-development)
 - [Testing](#-testing)
-- [Deployment](#-deployment)
+- [Running with Docker](#-running-with-docker)
 - [Roadmap](#-development-roadmap)
 
 ## 🌟 Overview
@@ -42,7 +42,7 @@
 - **📊 Complex Relationships**: Advanced JPA mappings (OneToMany, ManyToOne, OneToOne with bidirectional refs)
 - **🎨 DTO Pattern**: Prevents over-fetching and circular dependencies
 - **⚡ Performance Considerations**: Optimized lazy loading and database indexing strategies
-- **🧪 Production-Conscious Design**: Transactional integrity, error handling, and validation
+- **🧪 Robust Design**: Transactional integrity, error handling, and validation
 - **🔧 RESTful Standards**: API design following REST principles
 
 **Project Status:** Active Development | Portfolio Project  
@@ -289,7 +289,7 @@ curl -X POST http://localhost:8080/api/analysis/user/{userId} \
 - **JPA/Hibernate ORM**: Efficient database operations with relationship mapping
 - **⚡ Performance Optimization**: Database indexing on frequently queried columns
 - **📄 Pagination Support**: Efficient data retrieval with configurable page sizes
-- **🧪 Unit Testing**: Comprehensive test coverage with JUnit 5 and Mockito
+- **🧪 Unit Testing**: Test suite with JUnit 5 and Mockito
 - **🛡️ Global Exception Handling**: Centralized error handling with custom error responses
 
 ## 👤 User Experience Flow
@@ -307,7 +307,7 @@ curl -X POST http://localhost:8080/api/analysis/user/{userId} \
 
 ### Core Framework
 - **Java 21**: Latest LTS version with modern language features (records, pattern matching, virtual threads)
-- **Spring Boot 4.0.1**: Auto-configuration, embedded server, production-ready features
+- **Spring Boot 4.0.1**: Auto-configuration, embedded server, actuator endpoints
 - **Spring MVC**: RESTful web services with @RestController and @Controller
 - **Spring Data JPA**: Repository pattern with automatic query generation
 - **Spring Security**: JWT-based authentication and authorization
@@ -337,7 +337,7 @@ curl -X POST http://localhost:8080/api/analysis/user/{userId} \
 ### Development Tools
 - **Lombok**: Eliminates boilerplate with @Data, @RequiredArgsConstructor annotations
 - **Spring Boot DevTools**: Hot reload during development
-- **Spring Boot Actuator**: Production-ready monitoring and health checks
+- **Spring Boot Actuator**: Monitoring and health checks
 - **Maven**: Build lifecycle management and dependency resolution
 
 ### Validation & Mapping
@@ -587,7 +587,7 @@ The application uses the following default configuration:
 - **format_sql**: true (formats SQL for readability)
 - **ddl-auto**: create-drop (automatically manages schema)
 
-**⚠️ Production Note**: Change `ddl-auto` to `validate` or `none` in production and use migration tools like Flyway or Liquibase.
+**⚠️ Note**: Change `ddl-auto` to `validate` or `none` for persistent environments and use migration tools like Flyway or Liquibase.
 
 ## 📊 Database Schema
 
@@ -722,15 +722,10 @@ Or use the HTTP file: [`api-tests.http`](api-tests.http) (works with VS Code RES
 
 ---
 
-## 🚀 Deployment
-
-### Docker Deployment
+## � Running with Docker
 
 ```bash
-# Build Docker image
-docker build -t serralyse-backend:latest .
-
-# Run with Docker Compose
+# Build and run with Docker Compose
 docker-compose up -d
 
 # Check logs
@@ -740,60 +735,6 @@ docker-compose logs -f app
 docker-compose down
 ```
 
-### Production Configuration
-
-Update `application-prod.properties`:
-
-```properties
-# Database
-spring.datasource.url=jdbc:postgresql://${DB_HOST}:5432/${DB_NAME}
-spring.datasource.username=${DB_USER}
-spring.datasource.password=${DB_PASSWORD}
-
-# Hibernate
-spring.jpa.hibernate.ddl-auto=validate
-spring.jpa.show-sql=false
-
-# Logging
-logging.level.root=WARN
-logging.level.com.serralyse=INFO
-
-# Security
-server.port=8080
-server.ssl.enabled=true
-server.ssl.key-store=classpath:keystore.p12
-server.ssl.key-store-password=${SSL_PASSWORD}
-```
-
-### Environment Variables
-
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `DB_HOST` | PostgreSQL host | `postgres` |
-| `DB_NAME` | Database name | `serralyse_db` |
-| `DB_USER` | Database user | `serralyse_user` |
-| `DB_PASSWORD` | Database password | `SecurePass123!` |
-| `SPRING_PROFILES_ACTIVE` | Active profile | `prod` |
-
-### Cloud Deployment Options
-
-- **AWS**: Elastic Beanstalk, ECS, or EC2 + RDS
-- **Azure**: App Service + Azure Database for PostgreSQL
-- **Google Cloud**: Cloud Run + Cloud SQL
-- **Heroku**: Heroku Postgres add-on
-- **Railway**: One-click deployment
-
-### CI/CD Pipeline
-
-GitHub Actions workflow: [`.github/workflows/ci-cd.yml`](.github/workflows/ci-cd.yml)
-
-**Pipeline stages:**
-1. ✅ Build & Test
-2. ✅ Code Quality Check
-3. ✅ Docker Image Build
-4. ✅ Deploy to Staging (optional)
-5. ✅ Deploy to Production (manual approval)
-
 ---
 
 ## 💼 Portfolio Highlights
@@ -801,12 +742,11 @@ GitHub Actions workflow: [`.github/workflows/ci-cd.yml`](.github/workflows/ci-cd
 This project showcases:
 
 ✅ **Modern Java Development**: Java 21 with latest features  
-✅ **Spring Boot Framework**: Spring Boot 4.0.1 with production-conscious design  
+✅ **Spring Boot Framework**: Spring Boot 4.0.1 backend application  
 ✅ **Database Design**: PostgreSQL with complex JPA relationships  
 ✅ **API Design**: RESTful endpoints with proper HTTP semantics  
 ✅ **Code Quality**: Clean code with Lombok and design patterns  
 ✅ **Business Logic**: Real-world domain modeling (healthcare/cosmetics)  
-✅ **Scalability Considerations**: UUID-based design for future distributed systems  
 
 ## 📄 License
 
@@ -818,31 +758,26 @@ This project is licensed under the terms specified in the [LICENSE](LICENSE) fil
 
 ## � Development Roadmap
 
-**Completed Features:**
+**Implemented Features:**
 - ✅ RESTful API endpoints for user and analysis management
+- ✅ JWT-based authentication with Spring Security
+- ✅ In-memory caching with Caffeine
 - ✅ Automated prescription generation based on skin type
 - ✅ Database schema with JPA entities and relationships
 - ✅ DTO pattern implementation for clean API contracts
 - ✅ Transactional operations for data integrity
 - ✅ Automated data seeding for raw materials
+- ✅ Docker containerization with docker-compose
 
-**In Progress:**
-- 🔄 Spring Security with JWT authentication
-- 🔄 Enhanced error handling and custom exceptions
-- 🔄 Image upload and storage integration
+## 🔮 Potential Enhancements
 
-## 🔮 Planned Enhancements
-
-**Next Phase Technical Features:**
-- Spring Security + JWT for secure authentication
-- Flyway/Liquibase for database version control
-- Redis caching for performance optimization
-- Async processing with Spring's @Async
-- WebSocket integration for real-time updates
-- SpringDoc OpenAPI 3.0 for API documentation
-- Docker containerization
-- Unit & integration testing with JUnit 5 and Mockito
-- CI/CD pipeline configuration
+**Future Considerations:**
+- Database migration tools (Flyway/Liquibase)
+- Redis for distributed caching
+- Async processing for long-running operations
+- WebSocket for real-time updates
+- OpenAPI documentation generation
+- Enhanced test coverage
 
 **Business Features:**
 - AWS S3 integration for image storage
@@ -888,10 +823,8 @@ This project is licensed under the terms specified in the [LICENSE](LICENSE) fil
 **DevOps & Tools**
 - Docker containerization
 - Docker Compose orchestration
-- CI/CD with GitHub Actions
 - Environment-based configuration
 - Health checks & monitoring
-- Production deployment
 
 </td>
 <td>
@@ -920,10 +853,10 @@ This project is licensed under the terms specified in the [LICENSE](LICENSE) fil
    - **Solution**: Strategic use of `@EntityGraph` and fetch joins
    - **Learning**: Database query optimization techniques
 
-3. **Production Readiness**
+3. **Configuration Management**
    - **Problem**: Hard-coded configurations
    - **Solution**: Environment-based properties and Docker Compose
-   - **Learning**: 12-factor app methodology
+   - **Learning**: Flexible configuration patterns
 
 ---
 
@@ -934,8 +867,7 @@ This project is licensed under the terms specified in the [LICENSE](LICENSE) fil
 **Project Type**: Backend API (Spring Boot)  
 **Domain**: Healthcare/Cosmetics (Personalized Skincare)  
 **Complexity**: Medium (layered architecture, relational DB, designed with scalability considerations)  
-**Time Investment**: ~2 weeks of active development  
-**Lines of Code**: ~3,000 (excluding tests and configuration)
+**Time Investment**: ~2 weeks of active development
 
 ### Key Differentiators
 
@@ -962,7 +894,6 @@ Ready to discuss:
 - How I optimized database queries
 - Scaling strategies for this system
 - Security considerations and JWT implementation
-- CI/CD pipeline design
 - System architecture and design approach
 
 ---
